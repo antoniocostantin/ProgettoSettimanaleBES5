@@ -29,8 +29,7 @@ public class Progettosettimanalebe5Application {
         Faker faker = new Faker();
         Random r = new Random();
 
-        Prenotazione p = new Prenotazione(LocalDate.now(), List.of(userService.findById(4).orElseThrow()), List.of(postazioneService.getPostazioneById(9).orElseThrow()));
-        prenotazioneService.save(p);
+        postazioneService.getByCity("Shaniquaview").forEach(postazione -> System.out.println(postazione));
 
 
     }

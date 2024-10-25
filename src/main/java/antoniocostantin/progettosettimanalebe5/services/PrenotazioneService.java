@@ -19,19 +19,21 @@ public class PrenotazioneService {
 
     public void save(Prenotazione prenotazione) {
         boolean userControll = false;
-        for(User user : prenotazione.getUsers()) {
-            for(Postazione postazione : prenotazione.getPostazioni()){
-                if(postazione.getMax_occupanti() > numPren(prenotazione) && this.getByUserAndData(user, prenotazione.getData()).isEmpty() ){
+        for (User user : prenotazione.getUsers()) {
+            if (getByUserAndData(user, prenotazione.getData()).isEmpty()) {
 
-                }
+                userControll = true;
             }
 
         }
 
         if (userControll) {
+
             prenotazioneDao.save(prenotazione);
             System.out.println("Prenotazione " + prenotazione + " saved");
-        }else System.out.println("Prenotazione " + prenotazione + " not saved");
+
+
+        } else System.out.println("Prenotazione " + prenotazione + " not saved");
     }
 
     public void addUser(User user) {
@@ -42,7 +44,7 @@ public class PrenotazioneService {
         return prenotazioneDao.findById(id).get();
     }
 
-    public List<Prenotazione> getByUserAndData (User user, LocalDate data) {
+    public List<Prenotazione> getByUserAndData(User user, LocalDate data) {
         return prenotazioneDao.findByDataAndUsers(data, user);
     }
 
@@ -50,7 +52,7 @@ public class PrenotazioneService {
         return prenotazioneDao.findByUsers(user);
     }
 
-    public int numPren (Prenotazione prenotazione) {
+    public int numPren(Prenotazione prenotazione) {
         return prenotazione.getUsers().size();
     }
 
